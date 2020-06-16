@@ -63,7 +63,7 @@ exports.allSelect = function(req,res){
             // }
             // res.send(st);
 
-            res.render('allSelect', {});
+            res.render('allSelect', {rows:rows});
 
             // res.write('<html><head><meta charset="UTF-8"></head><body><table border=1>');
             // for(let i=0; i<rows.length; i++){
