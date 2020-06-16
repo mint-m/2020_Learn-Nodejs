@@ -72,8 +72,9 @@ app.post('/Join',function(req,res){
 });
 
 
-app.post('/Delete',function(req,res){
-    func.delete(req,res);
+app.get('/Delete',function(req,res){
+    console.log("Delete 호출성공");
+    func.delete(req,res);   
 });
 
 app.post('/Update',function(req,res){
@@ -86,6 +87,10 @@ app.post('/Select',function(req,res){
 });
 
 app.post('/selectall',function(req,res){
+    func.allSelect(req,res);
+});
+
+app.get('/selectall',function(req,res){
     func.allSelect(req,res);
 });
 

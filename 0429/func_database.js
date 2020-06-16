@@ -88,18 +88,21 @@ exports.allSelect = function(req,res){
 }
 
 exports.delete = function(req,res){
-    let id = req.body.id;
+    let id = req.query.id;
+    // console.log("QueryString으로 넘어온 ID값 : "+id);
     
+
     let sql = "delete from `member` where id=?"
 
     conn.query(sql,[id] ,function(err, rows){
         if(!err){
-            console.log("삭제 성공");
+            // console.log("삭제 성공");
+            res.redirect('http://localhost:3000/selectall');
         }else{
             console.log("삭제 실패");            
         }
     }); //DB에 Query를 전송하는 부분
-    res.send("성공");
+   // res.send("성공");
 }
 
 
