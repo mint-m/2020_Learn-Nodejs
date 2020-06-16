@@ -3,25 +3,30 @@ var bodyParser = require('body-parser');
 var app = express();
 var ejs = require('ejs'); // Template Engine 중 ejs 모듈을 로드함
 var func = require('./func_database.js');
+var sessionP = require('express-session')
 var port = 3000;
 
-// app.use(function(req,res, next){
-//     console.log("첫번째 미들웨어 실행!");
-//     next();
-// });
+var sessionP = require('express-session')
 
-// app.use(function(req,res, next){
-//     console.log("두번째 미들웨어 실행!");
-// });
+app.use(sessionP({
+    secret : "smart0317",
+    resave : false,
+    saveUninit : true
+}));
 
 app.use(bodyParser.urlencoded({extended:false})); // middle ware
 app.set('view engine', 'ejs');
 
 
-app.get('/',function(req,res){
-    res.render('index',{
-        num : 5
-    });
+
+app.get('/', function(req, res){
+    req.session.user = {
+        "name" : "jason",
+        "age" : "20"
+    };
+    console.log("Session 생성 완료");
+    // 웹 페이지에 문자열 데이터 전송
+    res.render('index', {num: 5});
 });
 
 
@@ -86,13 +91,15 @@ app.post('/Select',function(req,res){
     func.oneSelect(req,res);
 });
 
-app.post('/selectall',function(req,res){
+app.get('/selectall',function(req,res){
+    console.log("session 영역에 있는 user값 :"+req.session.user.name);
+    
     func.allSelect(req,res);
 });
 
-app.get('/selectall',function(req,res){
-    func.allSelect(req,res);
-});
+app.get('/mail', function(req, res){
+    res.render('mail', {})
+})
 
 app.listen(port, function(){
     console.log(`${port} 포트로 서버 실행중!`);
